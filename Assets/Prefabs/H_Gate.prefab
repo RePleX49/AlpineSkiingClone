@@ -253,6 +253,7 @@ GameObject:
   - component: {fileID: 1637705115055539754}
   - component: {fileID: 6931030620860194851}
   - component: {fileID: 7468555020744438128}
+  - component: {fileID: 7683417451035018652}
   m_Layer: 0
   m_Name: H_Gate
   m_TagString: Untagged
@@ -324,3 +325,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.6, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &7683417451035018652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7683417451035018651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f246a7b0a27044cad380f19bf08823, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5

@@ -22,6 +22,11 @@ public class HorizontalGate : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if(collision.gameObject.CompareTag("GameManager"))
+        {
+            collision.gameObject.BroadcastMessage("AddMissedGate");
+            Debug.Log("MissedGate");
+            Destroy(this.gameObject);
+        }
     }
 }
