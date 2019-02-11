@@ -6,6 +6,7 @@ public class HorizontalGate : MonoBehaviour
 {
     Rigidbody2D rb;
     public float moveSpeed = 2.0f;
+    public bool playerPassed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,13 +21,17 @@ public class HorizontalGate : MonoBehaviour
         rb.MovePosition(newPos);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void DestroySelf()
     {
-        if(collision.gameObject.CompareTag("GameManager"))
+        Destroy(this.gameObject);
+    }
+
+    void OnCollisionEnter2D (Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
         {
-            collision.gameObject.BroadcastMessage("AddMissedGate");
-            Debug.Log("MissedGate");
-            Destroy(this.gameObject);
+            playerPassed = true;
         }
+        Debug.Log("Collided");
     }
 }

@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 7683417451035018652}
   m_Layer: 0
   m_Name: H_Gate
-  m_TagString: Untagged
+  m_TagString: Gate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

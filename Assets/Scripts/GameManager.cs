@@ -5,22 +5,29 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    int GatesMissed = 0;
+    int GatesMissed;
 
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        GatesMissed = 0;
     }
 
     void AddMissedGate()
     {
         GatesMissed++;
+        Debug.Log("Gates Missed: " + GatesMissed);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Gate")
+        {           
+            if(!collision.GetComponent<HorizontalGate>().playerPassed)
+            {
+                AddMissedGate();
+            }
+            collision.gameObject.BroadcastMessage("DestroySelf");
+        }
     }
 }
