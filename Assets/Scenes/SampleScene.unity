@@ -331,11 +331,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 307323799272041829, guid: 97e5faebfaa9c5e4d9455af3ca468d33,
-        type: 3}
-      propertyPath: m_UseFullKinematicContacts
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97e5faebfaa9c5e4d9455af3ca468d33, type: 3}
 --- !u!1 &1987966410
@@ -368,10 +363,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HGate: {fileID: 7683417451035018651, guid: 31b1f547ad4bad54397c3fcf15399245, type: 3}
-  VGate: {fileID: 0}
-  spawnInterval: 1
-  minSpawnX: -2.5
-  maxSpawnX: 2.5
+  VGate: {fileID: 9048943139301455671, guid: d7e489f7a9dbcc7409a43ad61caa690f, type: 3}
+  spawnInterval: 1.75
+  minSpawnX: -2.75
+  maxSpawnX: 2.75
+  NumberOfGatesToSpawn: 55
 --- !u!4 &1987966412
 Transform:
   m_ObjectHideFlags: 0

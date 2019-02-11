@@ -6,6 +6,7 @@ TagManager:
   tags:
   - GameManager
   - Gate
+  - Flag
   layers:
   - Default
   - TransparentFX

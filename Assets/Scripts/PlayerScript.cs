@@ -10,8 +10,10 @@ public class PlayerScript : MonoBehaviour
 
     public float HorizontalSpeed = 15.0f;
     public float driftSpeed = 2.0f;
+    public float stunDuration= 1.25f;
     private float moveDirection = 0.0f;
     private float InitialYPos;
+    private bool bIsTripped;
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +59,32 @@ public class PlayerScript : MonoBehaviour
         Vector2 edgeVector = Camera.main.ViewportToWorldPoint(topRightCorner);
         edgeVector.x -= GetComponent<BoxCollider2D>().size.x/2;
         newPos.x = Mathf.Clamp(newPos.x, -edgeVector.x, edgeVector.x);
+        
+        if(!bIsTripped)
+        {
+            rb.MovePosition(newPos);
+        }      
+    }
 
-        rb.MovePosition(newPos);
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.tag == "Flag")
+        {
+            PlayerTrip();
+            // Debug.Log("Player Tripped");
+        }
+    }
+
+    void PlayerTrip()
+    {
+        // change anim state to tripped
+        bIsTripped = true;
+        Invoke("PlayerGetUp", stunDuration);
+    }
+
+    void PlayerGetUp()
+    {
+        // change anim back to skiing
+        bIsTripped = false;
     }
 }

@@ -32,6 +32,6 @@ public class HorizontalGate : MonoBehaviour
         {
             playerPassed = true;
         }
-        Debug.Log("Collided");
+        // Debug.Log("Collided");
     }
 }
