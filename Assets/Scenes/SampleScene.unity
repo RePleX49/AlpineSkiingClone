@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 803951096}
   - component: {fileID: 803951095}
   - component: {fileID: 803951094}
+  - component: {fileID: 803951097}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -222,7 +223,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -258,12 +259,33 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 803951093}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.48, z: 0}
+  m_LocalPosition: {x: 0, y: 6.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &803951097
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 803951093}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &1240640185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -331,6 +353,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 307323799272041832, guid: 97e5faebfaa9c5e4d9455af3ca468d33,
+        type: 3}
+      propertyPath: HorizontalSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 307323799272041832, guid: 97e5faebfaa9c5e4d9455af3ca468d33,
+        type: 3}
+      propertyPath: driftSpeed
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97e5faebfaa9c5e4d9455af3ca468d33, type: 3}
 --- !u!1 &1987966410
@@ -364,9 +396,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HGate: {fileID: 7683417451035018651, guid: 31b1f547ad4bad54397c3fcf15399245, type: 3}
   VGate: {fileID: 9048943139301455671, guid: d7e489f7a9dbcc7409a43ad61caa690f, type: 3}
-  spawnInterval: 1.75
-  minSpawnX: -2.75
-  maxSpawnX: 2.75
+  FinishLine: {fileID: 7816649649310966704, guid: e2ff00680544d1949b7eb51858ef3102,
+    type: 3}
+  spawnInterval: 0.65
+  minSpawnX: -2
+  maxSpawnX: 2
   NumberOfGatesToSpawn: 55
 --- !u!4 &1987966412
 Transform:

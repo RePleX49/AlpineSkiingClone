@@ -6,6 +6,7 @@ public class GateSpawnerScript : MonoBehaviour
 {
     public GameObject HGate;
     public GameObject VGate;
+    public GameObject FinishLine;
     private GameObject previousGate;
     public float spawnInterval = 1.0f;
     public float minSpawnX = -4.0f;
@@ -59,6 +60,8 @@ public class GateSpawnerScript : MonoBehaviour
         else
         {
             CancelInvoke("SpawnGate");
+            GameObject a = Instantiate(FinishLine);
+            a.transform.position = this.transform.position;
             Debug.Log("Finished!");
             // Add spawn finish line
         }

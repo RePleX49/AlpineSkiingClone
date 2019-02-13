@@ -13,21 +13,9 @@ public class GameManager : MonoBehaviour
         GatesMissed = 0;
     }
 
-    void AddMissedGate()
+    public void AddMissedGate()
     {
         GatesMissed++;
         Debug.Log("Gates Missed: " + GatesMissed);
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Gate")
-        {           
-            if(!collision.GetComponent<HorizontalGate>().playerPassed)
-            {
-                AddMissedGate();
-            }
-            collision.gameObject.BroadcastMessage("DestroySelf");
-        }
     }
 }
