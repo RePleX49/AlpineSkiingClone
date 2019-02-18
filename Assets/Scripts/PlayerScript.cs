@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-
+    SpriteRenderer sr;
     Rigidbody2D rb;
     Vector2 newPos;
+    Animator animator;
 
     public float HorizontalSpeed = 15.0f;
     public float driftSpeed = 2.0f;
@@ -18,7 +19,9 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
         InitialYPos = rb.position.y;
     }
 
@@ -27,31 +30,62 @@ public class PlayerScript : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.S))
         {
-            moveDirection = 0.0f;
+            moveDirection = 0.0f;           
+        }
+        else if(!Input.GetKey(KeyCode.S))
+        {
+            if(moveDirection == 0.0f) // If no input then randomly assign a drift direction
+            {
+                if (Random.Range(0.0f, 10.0f) > 5.0f)
+                {
+                    moveDirection = 1.0f;
+                }
+                else
+                {
+                    moveDirection = -1.0f;
+                }
+            }          
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            moveDirection = 1.0f;
+            moveDirection = 1.0f;            
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            moveDirection = -1.0f;
+            moveDirection = -1.0f;                      
         }
 
-        
-        if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
+        // Check moveDirection sign and flip sprite accordingly
+        if(moveDirection > 0.0f)
         {
+            sr.flipX = false;
+            animator.SetTrigger("SkiActive");          
+        }
+        else if(moveDirection < 0.0f)
+        {
+            sr.flipX = true;
+            animator.SetTrigger("SkiActive");          
+        }
+        else
+        {
+            animator.SetTrigger("SkiDown");
+            sr.flipX = false;                   
+        }
+
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
+        {            
             newPos = new Vector2(rb.position.x + (moveDirection * HorizontalSpeed * Time.deltaTime), InitialYPos);
         }
 
         if (Input.GetKey(KeyCode.S))
-        {
+        {       
             newPos = new Vector2(rb.position.x + (moveDirection * HorizontalSpeed * Time.deltaTime), InitialYPos);
         }
         else if(!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
         {
+            animator.SetTrigger("SkiDrift");
             newPos = new Vector2(rb.position.x + (moveDirection * driftSpeed * Time.deltaTime), InitialYPos);
         }
 
@@ -82,14 +116,14 @@ public class PlayerScript : MonoBehaviour
 
     void PlayerTrip()
     {
-        // change anim state to tripped
+        animator.SetTrigger("SkiTripped");
+        
         bIsTripped = true;
         Invoke("PlayerGetUp", stunDuration);
     }
 
     void PlayerGetUp()
     {
-        // change anim back to skiing
         bIsTripped = false;
     }
 }

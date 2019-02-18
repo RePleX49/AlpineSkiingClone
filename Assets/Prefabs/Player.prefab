@@ -141,6 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f60a9a67422da44aa251a4cdd19260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HorizontalSpeed: 12.5
-  driftSpeed: 2
-  stunDuration: 1.25
+  HorizontalSpeed: 8
+  driftSpeed: 6
+  stunDuration: 1
