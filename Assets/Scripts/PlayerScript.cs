@@ -60,10 +60,15 @@ public class PlayerScript : MonoBehaviour
         edgeVector.x -= GetComponent<BoxCollider2D>().size.x/2;
         newPos.x = Mathf.Clamp(newPos.x, -edgeVector.x, edgeVector.x);
         
-        if(!bIsTripped)
+            
+    }
+
+    void FixedUpdate()
+    {
+        if (!bIsTripped)
         {
             rb.MovePosition(newPos);
-        }      
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)

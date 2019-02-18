@@ -69,7 +69,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: af6fba14ab9e13b4590385d6d18bc58e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 49356ac9c392b174d9dd02f1a6bd2503, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -93,18 +93,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.02}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.09, y: 0.14}
+    oldSize: {x: 0.0875, y: 0.1125}
     newSize: {x: 0.09, y: 0.14}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.09, y: 0.14}
+  m_Size: {x: 0.09, y: 0.08}
   m_EdgeRadius: 0
 --- !u!1 &4315504774275024093
 GameObject:
@@ -175,7 +175,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: af6fba14ab9e13b4590385d6d18bc58e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 49356ac9c392b174d9dd02f1a6bd2503, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -199,18 +199,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.02}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.09, y: 0.14}
+    oldSize: {x: 0.0875, y: 0.1125}
     newSize: {x: 0.09, y: 0.14}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.09, y: 0.14}
+  m_Size: {x: 0.09, y: 0.08}
   m_EdgeRadius: 0
 --- !u!1 &7683417451035018651
 GameObject:
@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 7468555020744438128}
   - component: {fileID: 7683417451035018652}
   m_Layer: 0
-  m_Name: H_Gate
+  m_Name: Blue_HGate
   m_TagString: Gate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -306,5 +306,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f246a7b0a27044cad380f19bf08823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 6.5
+  moveSpeed: 5
   playerPassed: 0

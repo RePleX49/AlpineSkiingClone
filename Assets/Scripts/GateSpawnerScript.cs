@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class GateSpawnerScript : MonoBehaviour
 {
-    public GameObject HGate;
-    public GameObject VGate;
+    public GameObject BlueHGate;
+    public GameObject BlueVGate;
+    public GameObject RedHGate;
+    public GameObject RedVGate;
     public GameObject FinishLine;
     private GameObject previousGate;
     public float spawnInterval = 1.0f;
-    public float minSpawnX = -4.0f;
-    public float maxSpawnX = 4.0f;
+    public float minSpawnX = -2.0f;
+    public float maxSpawnX = 2.0f;
     public int NumberOfGatesToSpawn = 55;
+    public float VerticalGateOffset = 1;
     private int GatesSpawned = 0;
+    private bool FlipFlop = false;
+    private float defaultOffset;
 
     Vector2 spawnLocation;
 
@@ -21,6 +26,7 @@ public class GateSpawnerScript : MonoBehaviour
     {
         GatesSpawned = 0;
         spawnLocation = this.transform.position;
+        defaultOffset = spawnLocation.y;
         InvokeRepeating("SpawnGate", 0.0f, spawnInterval);
     }
 
@@ -29,30 +35,93 @@ public class GateSpawnerScript : MonoBehaviour
         if(GatesSpawned < NumberOfGatesToSpawn)
         {
             spawnLocation.x = Random.Range(minSpawnX, maxSpawnX);
-            //Transform spawnTransform = gameObject.transform;
-            //spawnTransform.position = spawnLocation;
-            if(Random.Range(0.0f, 2.0f) > 0.2f)
+            if (FlipFlop)
             {
-                GameObject a = Instantiate(HGate);
-
-                if(previousGate)
+                FlipFlop = false;
+                if (Random.Range(0.0f, 2.0f) > 0.2f)
                 {
-                    if (previousGate.name == "V_Gate")
-                    {
-                        spawnLocation.x = previousGate.transform.position.x;
-                    }
-                }             
+                    GameObject a = Instantiate(BlueHGate);
 
-                previousGate = a;
-                a.transform.position = spawnLocation;
-                GatesSpawned++;
+                    if (previousGate)
+                    {
+                        if (previousGate.name == "RedVGate" || previousGate.name == "BlueVGate")
+                        {
+                            spawnLocation.y = spawnLocation.y - VerticalGateOffset;
+                        }
+                        else
+                        {
+                            spawnLocation.y = defaultOffset;
+                        }
+                    }
+
+                    previousGate = a;
+                    a.transform.position = spawnLocation;
+                    GatesSpawned++;
+                }
+                else
+                {
+                    GameObject a = Instantiate(BlueVGate);
+
+                    if (previousGate)
+                    {
+                        if (previousGate.name == "RedVGate" || previousGate.name == "BlueVGate")
+                        {
+                            spawnLocation.y = spawnLocation.y - (VerticalGateOffset + 1.5f);
+                        }
+                        else
+                        {
+                            spawnLocation.y = defaultOffset;
+                        }
+                    }
+
+                    previousGate = a;
+                    a.transform.position = spawnLocation;
+                    GatesSpawned++;
+                }
             }
             else
             {
-                GameObject a = Instantiate(VGate);             
-                previousGate = a;
-                a.transform.position = spawnLocation;
-                GatesSpawned++;
+                FlipFlop = true;
+                if (Random.Range(0.0f, 2.0f) > 0.2f)
+                {
+                    GameObject a = Instantiate(RedHGate);
+
+                    if (previousGate)
+                    {
+                        if (previousGate.name == "RedVGate" || previousGate.name == "BlueVGate")
+                        {
+                            spawnLocation.y = spawnLocation.y - VerticalGateOffset;
+                        }
+                        else
+                        {
+                            spawnLocation.y = defaultOffset;
+                        }
+                    }
+
+                    previousGate = a;
+                    a.transform.position = spawnLocation;
+                    GatesSpawned++;
+                }
+                else
+                {
+                    GameObject a = Instantiate(RedVGate);
+
+                    if (previousGate)
+                    {
+                        if (previousGate.name == "RedVGate" || previousGate.name == "BlueVGate")
+                        {
+                            spawnLocation.y = spawnLocation.y - (VerticalGateOffset + 1.5f);
+                        }
+                        else
+                        {
+                            spawnLocation.y = defaultOffset;
+                        }
+                    }
+
+                    previousGate = a;
+                    a.transform.position = spawnLocation;
+                    GatesSpawned++;
+                }
             }            
             
             Debug.Log(GatesSpawned);
