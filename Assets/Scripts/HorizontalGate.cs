@@ -14,12 +14,6 @@ public class HorizontalGate : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void FixedUpdate()
     {
         Vector2 newPos = rb.position + Vector2.up * moveSpeed * Time.deltaTime;
@@ -30,7 +24,7 @@ public class HorizontalGate : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            playerPassed = true;
+            playerPassed = true;         
         }
         else if (collision.gameObject.tag == "GameManager")
         {

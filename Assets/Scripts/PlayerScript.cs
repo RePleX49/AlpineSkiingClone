@@ -28,73 +28,31 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.S))
-        {
-            moveDirection = 0.0f;           
-        }
-        else if(!Input.GetKey(KeyCode.S))
-        {
-            if(moveDirection == 0.0f) // If no input then randomly assign a drift direction
-            {
-                if (Random.Range(0.0f, 10.0f) > 5.0f)
-                {
-                    moveDirection = 1.0f;
-                }
-                else
-                {
-                    moveDirection = -1.0f;
-                }
-            }          
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveDirection = 1.0f;            
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveDirection = -1.0f;                      
-        }
-
-        // Check moveDirection sign and flip sprite accordingly
-        if(moveDirection > 0.0f)
-        {
-            sr.flipX = false;
-            animator.SetTrigger("SkiActive");          
-        }
-        else if(moveDirection < 0.0f)
-        {
-            sr.flipX = true;
-            animator.SetTrigger("SkiActive");          
-        }
-        else
-        {
-            animator.SetTrigger("SkiDown");
-            sr.flipX = false;                   
-        }
+        GetInput();
+        TriggerAnimations();       
 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
         {            
+            //Move player position respectively when left or right input is true
             newPos = new Vector2(rb.position.x + (moveDirection * HorizontalSpeed * Time.deltaTime), InitialYPos);
         }
 
-        if (Input.GetKey(KeyCode.S))
-        {       
+        if (Input.GetKey(KeyCode.S)) 
+        {
+            //Give player zero horizontal movement when down input is true
             newPos = new Vector2(rb.position.x + (moveDirection * HorizontalSpeed * Time.deltaTime), InitialYPos);
         }
-        else if(!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+        else if(!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)) 
         {
-            animator.SetTrigger("SkiDrift");
+            //Move character at driftSpeed if there is no input
+            if(!bIsTripped)
+            {
+                animator.SetTrigger("SkiDrift");
+            }           
             newPos = new Vector2(rb.position.x + (moveDirection * driftSpeed * Time.deltaTime), InitialYPos);
         }
 
-        Vector2 topRightCorner = new Vector2(1, 1);
-        Vector2 edgeVector = Camera.main.ViewportToWorldPoint(topRightCorner);
-        edgeVector.x -= GetComponent<BoxCollider2D>().size.x/2;
-        newPos.x = Mathf.Clamp(newPos.x, -edgeVector.x, edgeVector.x);
-        
-            
+        MakeHorizontalLimits();          
     }
 
     void FixedUpdate()
@@ -116,14 +74,76 @@ public class PlayerScript : MonoBehaviour
 
     void PlayerTrip()
     {
-        animator.SetTrigger("SkiTripped");
-        
         bIsTripped = true;
+        animator.SetTrigger("SkiTripped");       
         Invoke("PlayerGetUp", stunDuration);
     }
 
     void PlayerGetUp()
     {
         bIsTripped = false;
+    }
+
+    void GetInput()
+    {
+        if (Input.GetKey(KeyCode.S))
+        {
+            moveDirection = 0.0f;
+        }
+        else if (!Input.GetKey(KeyCode.S))
+        {
+            if (moveDirection == 0.0f) // If no input then randomly assign a drift direction
+            {
+                if (Random.Range(0.0f, 10.0f) > 5.0f)
+                {
+                    moveDirection = 1.0f;
+                }
+                else
+                {
+                    moveDirection = -1.0f;
+                }
+            }
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            moveDirection = 1.0f;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            moveDirection = -1.0f;
+        }
+    }
+
+    void MakeHorizontalLimits()
+    {
+        Vector2 topRightCorner = new Vector2(1, 1);
+        Vector2 edgeVector = Camera.main.ViewportToWorldPoint(topRightCorner);
+        edgeVector.x -= GetComponent<BoxCollider2D>().size.x / 2;
+        newPos.x = Mathf.Clamp(newPos.x, -edgeVector.x, edgeVector.x);
+    }
+
+    void TriggerAnimations()
+    {
+        if(!bIsTripped)
+        {
+            // Check moveDirection sign and flip sprite accordingly
+            if (moveDirection > 0.0f)
+            {
+                sr.flipX = false;
+                animator.SetTrigger("SkiActive");
+            }
+            else if (moveDirection < 0.0f)
+            {
+                sr.flipX = true;
+                animator.SetTrigger("SkiActive");
+            }
+            else
+            {
+                sr.flipX = false;
+                animator.SetTrigger("SkiDown");
+            }
+        }        
     }
 }

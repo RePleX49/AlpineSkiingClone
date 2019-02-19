@@ -210,10 +210,10 @@ RectTransform:
   m_Father: {fileID: 1465090660}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -431, y: 350}
-  m_SizeDelta: {x: 318.1, y: 86.1}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 216.1, y: -67}
+  m_SizeDelta: {x: 192.1, y: 86.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &318730760
 MonoBehaviour:
@@ -242,7 +242,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 7
     m_MaxSize: 72
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -399,6 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScoreText: {fileID: 1018818011}
+  TimerText: {fileID: 318730760}
 --- !u!4 &803951096
 Transform:
   m_ObjectHideFlags: 0
@@ -621,6 +622,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 25351b9181d069a4496de908d86244a3,
         type: 3}
+    - target: {fileID: 307323799272041832, guid: 97e5faebfaa9c5e4d9455af3ca468d33,
+        type: 3}
+      propertyPath: HorizontalSpeed
+      value: 6.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 307323799272041832, guid: 97e5faebfaa9c5e4d9455af3ca468d33,
+        type: 3}
+      propertyPath: driftSpeed
+      value: 4.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97e5faebfaa9c5e4d9455af3ca468d33, type: 3}
 --- !u!1 &1374804481 stripped

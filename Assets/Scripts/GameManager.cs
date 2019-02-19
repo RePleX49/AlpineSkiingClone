@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     int GatesMissed;
     public Text ScoreText;
+    public Text TimerText;
 
     // Start is called before the first frame update
     void Start()
@@ -14,9 +15,10 @@ public class GameManager : MonoBehaviour
         GatesMissed = 0;
     }
 
-    private void Update()
+    void Update()
     {
         ScoreText.text = "-" + GatesMissed + "-";
+        TimerText.text = Time.timeSinceLevelLoad.ToString();
     }
 
     public void AddMissedGate()
