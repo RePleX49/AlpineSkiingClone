@@ -15,12 +15,14 @@ public class GateSpawnerScript : MonoBehaviour
     public float maxSpawnX = 2.0f;
     public int NumberOfGatesToSpawn = 55;
     public float VerticalGateOffset = 1;
+    public float PreparationTime = 5.0f;
     private int GatesSpawned = 0;
     private bool FlipFlop = false;
     private float defaultOffset;
     private bool GameFinished = false;
 
     Vector2 spawnLocation;
+    GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +30,9 @@ public class GateSpawnerScript : MonoBehaviour
         GatesSpawned = 0;
         spawnLocation = this.transform.position;
         defaultOffset = spawnLocation.y;
-        InvokeRepeating("SpawnGate", 0.0f, spawnInterval);
+        player = GameObject.Find("Player");
+        
+        StartCoroutine(GamePreparation(PreparationTime));
     }
 
     private void Update()
@@ -140,6 +144,20 @@ public class GateSpawnerScript : MonoBehaviour
             FinishGame();
         }
        
+    }
+
+    IEnumerator GamePreparation(float PrepTime)
+    {
+        float elapsedTime = 0.0f;
+
+        while(elapsedTime < PrepTime)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
+
+        player.BroadcastMessage("GameStart");
+        InvokeRepeating("SpawnGate", 0.0f, spawnInterval);
     }
 
     void FinishGame()

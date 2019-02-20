@@ -400,6 +400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScoreText: {fileID: 1018818011}
   TimerText: {fileID: 318730760}
+  GameFinished: 0
 --- !u!4 &803951096
 Transform:
   m_ObjectHideFlags: 0
@@ -625,12 +626,12 @@ PrefabInstance:
     - target: {fileID: 307323799272041832, guid: 97e5faebfaa9c5e4d9455af3ca468d33,
         type: 3}
       propertyPath: HorizontalSpeed
-      value: 12
+      value: 13.5
       objectReference: {fileID: 0}
     - target: {fileID: 307323799272041832, guid: 97e5faebfaa9c5e4d9455af3ca468d33,
         type: 3}
       propertyPath: driftSpeed
-      value: 9.5
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 307323799272041832, guid: 97e5faebfaa9c5e4d9455af3ca468d33,
         type: 3}
@@ -808,6 +809,7 @@ MonoBehaviour:
   maxSpawnX: 2
   NumberOfGatesToSpawn: 55
   VerticalGateOffset: 1.5
+  PreparationTime: 5
 --- !u!4 &1987966412
 Transform:
   m_ObjectHideFlags: 0

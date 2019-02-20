@@ -18,6 +18,7 @@ public class PlayerScript : MonoBehaviour
     private float DownScreenPosition;
     private bool bIsTripped;
     private bool moveDown = false;
+    private bool GameStarted = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +34,7 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         GetInput();
-        TriggerAnimations();       
+        TriggerAnimations();
 
         //TODO refactor this
         if(moveDown)
@@ -58,12 +59,19 @@ public class PlayerScript : MonoBehaviour
         }
         else if(!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)) 
         {
-            //Move character at driftSpeed if there is no input
-            if(!bIsTripped)
+            if(GameStarted)
             {
-                animator.SetTrigger("SkiDrift");
-            }           
-            newPos = new Vector2(rb.position.x + (moveDirection * driftSpeed * Time.deltaTime), InitialYPos);
+                //Move character at driftSpeed if there is no input
+                if (!bIsTripped)
+                {
+                    animator.SetTrigger("SkiDrift");
+                }
+                newPos = new Vector2(rb.position.x + (moveDirection * driftSpeed * Time.deltaTime), InitialYPos);
+            }
+            else
+            {
+                animator.SetTrigger("PrepDefault");
+            }
         }
 
         MakeHorizontalLimits();          
@@ -74,7 +82,7 @@ public class PlayerScript : MonoBehaviour
         if (!bIsTripped)
         {
             rb.MovePosition(newPos);
-            Debug.Log("Updating Position");
+           // Debug.Log("Updating Position");
         }
     }
 
@@ -88,6 +96,8 @@ public class PlayerScript : MonoBehaviour
         else if (collision.gameObject.tag == "FinishLine")
         {
             moveDown = true;
+            GameObject gm = GameObject.Find("GameManager");
+            gm.GetComponent<GameManager>().GameFinished = true;
         }
     }
 
@@ -152,11 +162,13 @@ public class PlayerScript : MonoBehaviour
             {
                 sr.flipX = false;
                 animator.SetTrigger("SkiActive");
+                animator.SetTrigger("PrepMove");
             }
             else if (moveDirection < 0.0f)
             {
                 sr.flipX = true;
                 animator.SetTrigger("SkiActive");
+                animator.SetTrigger("PrepMove");
             }
             else
             {
@@ -164,5 +176,11 @@ public class PlayerScript : MonoBehaviour
                 animator.SetTrigger("SkiDown");
             }
         }        
+    }
+
+    void GameStart()
+    {
+        GameStarted = true;
+        animator.SetBool("GameStart", true);
     }
 }
