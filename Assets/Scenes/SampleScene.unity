@@ -625,12 +625,17 @@ PrefabInstance:
     - target: {fileID: 307323799272041832, guid: 97e5faebfaa9c5e4d9455af3ca468d33,
         type: 3}
       propertyPath: HorizontalSpeed
-      value: 6.5
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 307323799272041832, guid: 97e5faebfaa9c5e4d9455af3ca468d33,
         type: 3}
       propertyPath: driftSpeed
-      value: 4.75
+      value: 9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 307323799272041832, guid: 97e5faebfaa9c5e4d9455af3ca468d33,
+        type: 3}
+      propertyPath: DownScreenDistance
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 97e5faebfaa9c5e4d9455af3ca468d33, type: 3}

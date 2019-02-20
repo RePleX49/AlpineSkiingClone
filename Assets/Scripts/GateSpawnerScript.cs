@@ -18,6 +18,7 @@ public class GateSpawnerScript : MonoBehaviour
     private int GatesSpawned = 0;
     private bool FlipFlop = false;
     private float defaultOffset;
+    private bool GameFinished = false;
 
     Vector2 spawnLocation;
 
@@ -28,6 +29,14 @@ public class GateSpawnerScript : MonoBehaviour
         spawnLocation = this.transform.position;
         defaultOffset = spawnLocation.y;
         InvokeRepeating("SpawnGate", 0.0f, spawnInterval);
+    }
+
+    private void Update()
+    {
+        if(Input.GetKey(KeyCode.P) && !GameFinished)
+        {
+            FinishGame();
+        }
     }
 
     void SpawnGate()
@@ -128,12 +137,19 @@ public class GateSpawnerScript : MonoBehaviour
         }
         else
         {
-            CancelInvoke("SpawnGate");
-            GameObject a = Instantiate(FinishLine);
-            a.transform.position = this.transform.position;
-            Debug.Log("Finished!");
-            // Add spawn finish line
+            FinishGame();
         }
        
     }
+
+    void FinishGame()
+    {
+        GameFinished = true;
+        CancelInvoke("SpawnGate");
+        GameObject a = Instantiate(FinishLine);
+        a.transform.position = this.transform.position;
+        Debug.Log("Finished!");
+        // Add spawn finish line
+    }
 }
+

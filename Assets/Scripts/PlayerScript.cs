@@ -12,9 +12,12 @@ public class PlayerScript : MonoBehaviour
     public float HorizontalSpeed = 15.0f;
     public float driftSpeed = 2.0f;
     public float stunDuration= 1.25f;
+    public float DownScreenDistance;
     private float moveDirection = 0.0f;
     private float InitialYPos;
+    private float DownScreenPosition;
     private bool bIsTripped;
+    private bool moveDown = false;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,7 @@ public class PlayerScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         InitialYPos = rb.position.y;
+        DownScreenPosition = InitialYPos - DownScreenDistance;
     }
 
     // Update is called once per frame
@@ -30,6 +34,16 @@ public class PlayerScript : MonoBehaviour
     {
         GetInput();
         TriggerAnimations();       
+
+        //TODO refactor this
+        if(moveDown)
+        {
+            InitialYPos = Mathf.Lerp(InitialYPos, DownScreenPosition, 0.01f);
+            if(InitialYPos < DownScreenPosition)
+            {
+                moveDown = false;
+            }
+        }
 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
         {            
@@ -60,15 +74,20 @@ public class PlayerScript : MonoBehaviour
         if (!bIsTripped)
         {
             rb.MovePosition(newPos);
+            Debug.Log("Updating Position");
         }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.tag == "Flag")
+        if (collision.collider.tag == "Flag")
         {
             PlayerTrip();
             // Debug.Log("Player Tripped");
+        }
+        else if (collision.gameObject.tag == "FinishLine")
+        {
+            moveDown = true;
         }
     }
 
