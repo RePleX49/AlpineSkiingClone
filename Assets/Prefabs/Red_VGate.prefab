@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 224653158501078282}
   - component: {fileID: 3522777030915168073}
   - component: {fileID: 9002808602016412712}
+  - component: {fileID: 1731695948272159370}
   m_Layer: 0
   m_Name: Red_VGate
   m_TagString: Gate
@@ -96,6 +97,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   playerPassed: 0
+--- !u!95 &1731695948272159370
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470734195569657364}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 950561ccaf9ba2f44bb87e3fee0771e1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3140253660218296052
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class HorizontalGate : MonoBehaviour
 
     public bool playerPassed = false;
 
-    PlayerScript.TrickState RequiredTrick;
+    PlayerScript.TrickState GateTrick;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,7 @@ public class HorizontalGate : MonoBehaviour
         int TrickInt = Random.Range(1, 4);
 
         animator.SetInteger("TrickSpriteInt", TrickInt);
-        RequiredTrick = (PlayerScript.TrickState)TrickInt;
+        GateTrick = (PlayerScript.TrickState)TrickInt;
     }
 
     void FixedUpdate()
@@ -37,7 +37,7 @@ public class HorizontalGate : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {            
-            if(ps.trickState == RequiredTrick)
+            if(ps.trickState == GateTrick)
             {
                 playerPassed = true;
                 Debug.Log("Passed");

@@ -12,10 +12,10 @@ public class PlayerScript : MonoBehaviour
     public KeyCode RightKey;
     public KeyCode LeftKey;
     public KeyCode DownKey;
-    public KeyCode FTricKey;
-    public KeyCode BTricKey;
-    public KeyCode RTricKey;
-    public KeyCode LTricKey;
+    public KeyCode FTrickKey;
+    public KeyCode BTrickKey;
+    public KeyCode RTrickKey;
+    public KeyCode LTrickKey;
 
     public float HorizontalSpeed = 15.0f;
     public float driftSpeed = 2.0f;
@@ -186,7 +186,7 @@ public class PlayerScript : MonoBehaviour
 
     void GetTrickInput()
     {
-        if (Input.GetKeyDown(FTricKey))
+        if (Input.GetKeyDown(FTrickKey))
         {
             moveDirection = 0.0f;
             trickState = TrickState.ForwardTrick;
@@ -194,7 +194,7 @@ public class PlayerScript : MonoBehaviour
             bDoingTrick = true;
             Invoke("ResetTrickState", TrickDuration);
         }
-        else if (Input.GetKeyDown(BTricKey))
+        else if (Input.GetKeyDown(BTrickKey))
         {
             moveDirection = 0.0f;
             trickState = TrickState.BackTrick;
@@ -202,7 +202,7 @@ public class PlayerScript : MonoBehaviour
             bDoingTrick = true;
             Invoke("ResetTrickState", TrickDuration);
         }
-        else if (Input.GetKeyDown(RTricKey))
+        else if (Input.GetKeyDown(RTrickKey))
         {
             moveDirection = 0.0f;
             trickState = TrickState.RightTrick;
@@ -210,7 +210,7 @@ public class PlayerScript : MonoBehaviour
             bDoingTrick = true;
             Invoke("ResetTrickState", TrickDuration);
         }
-        else if (Input.GetKeyDown(LTricKey))
+        else if (Input.GetKeyDown(LTrickKey))
         {
             moveDirection = 0.0f;
             trickState = TrickState.LeftTrick;
