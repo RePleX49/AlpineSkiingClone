@@ -9,16 +9,39 @@ public class PlayerScript : MonoBehaviour
     Vector2 newPos;
     Animator animator;
 
+    public KeyCode RightKey;
+    public KeyCode LeftKey;
+    public KeyCode DownKey;
+    public KeyCode FTricKey;
+    public KeyCode BTricKey;
+    public KeyCode RTricKey;
+    public KeyCode LTricKey;
+
     public float HorizontalSpeed = 15.0f;
     public float driftSpeed = 2.0f;
-    public float stunDuration= 1.25f;
+    public float stunDuration = 1.25f;
     public float DownScreenDistance;
+    public float TrickDuration = 1.35f;
+
     private float moveDirection = 0.0f;
     private float InitialYPos;
     private float DownScreenPosition;
+
     private bool bIsTripped;
-    private bool moveDown = false;
-    private bool GameStarted = false;
+    private bool bDoingTrick;
+    private bool moveDown;
+    private bool GameStarted;
+
+    public enum TrickState {Neutral, ForwardTrick, BackTrick, RightTrick, LeftTrick};
+
+    public TrickState trickState;
+
+    void Awake()
+    {
+        moveDown = false;
+        bDoingTrick = false;
+        GameStarted = false;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -28,12 +51,20 @@ public class PlayerScript : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         InitialYPos = rb.position.y;
         DownScreenPosition = InitialYPos - DownScreenDistance;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetInput();
+        GetTrickInput();
+
+        if(!bDoingTrick)
+        {
+            GetMovementInput();
+        }
+        
+        
         TriggerAnimations();
 
         //TODO refactor this
@@ -44,28 +75,27 @@ public class PlayerScript : MonoBehaviour
             {
                 moveDown = false;
             }
-        }
+        }       
 
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
+        if (Input.GetKey(RightKey) || Input.GetKey(LeftKey))
         {            
             //Move player position respectively when left or right input is true
             newPos = new Vector2(rb.position.x + (moveDirection * HorizontalSpeed * Time.deltaTime), InitialYPos);
         }
 
-        if (Input.GetKey(KeyCode.S)) 
+        if (Input.GetKey(DownKey) || bDoingTrick) 
         {
             //Give player zero horizontal movement when down input is true
             newPos = new Vector2(rb.position.x + (moveDirection * HorizontalSpeed * Time.deltaTime), InitialYPos);
         }
-        else if(!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)) 
+        else if(!Input.GetKey(RightKey) && !Input.GetKey(LeftKey)) 
         {
             if(GameStarted)
             {
                 //Move character at driftSpeed if there is no input
-                if (!bIsTripped)
-                {
-                    animator.SetTrigger("SkiDrift");
-                }
+
+                animator.SetTrigger("SkiDrift");
+
                 newPos = new Vector2(rb.position.x + (moveDirection * driftSpeed * Time.deltaTime), InitialYPos);
             }
             else
@@ -95,6 +125,7 @@ public class PlayerScript : MonoBehaviour
         }
         else if (collision.gameObject.tag == "FinishLine")
         {
+            // tell GameManager that game is finished and initiate movement downscreen
             moveDown = true;
             GameObject gm = GameObject.Find("GameManager");
             gm.GetComponent<GameManager>().GameFinished = true;
@@ -113,13 +144,13 @@ public class PlayerScript : MonoBehaviour
         bIsTripped = false;
     }
 
-    void GetInput()
+    void GetMovementInput()
     {
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(DownKey))
         {
             moveDirection = 0.0f;
         }
-        else if (!Input.GetKey(KeyCode.S))
+        else if (!Input.GetKey(DownKey))
         {
             if (moveDirection == 0.0f) // If no input then randomly assign a drift direction
             {
@@ -134,12 +165,12 @@ public class PlayerScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(RightKey))
         {
             moveDirection = 1.0f;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(LeftKey))
         {
             moveDirection = -1.0f;
         }
@@ -151,6 +182,52 @@ public class PlayerScript : MonoBehaviour
         Vector2 edgeVector = Camera.main.ViewportToWorldPoint(topRightCorner);
         edgeVector.x -= GetComponent<BoxCollider2D>().size.x / 2;
         newPos.x = Mathf.Clamp(newPos.x, -edgeVector.x, edgeVector.x);
+    }
+
+    void GetTrickInput()
+    {
+        if (Input.GetKeyDown(FTricKey))
+        {
+            moveDirection = 0.0f;
+            trickState = TrickState.ForwardTrick;
+            animator.SetTrigger("ForwardTrick");
+            bDoingTrick = true;
+            Invoke("ResetTrickState", TrickDuration);
+        }
+        else if (Input.GetKeyDown(BTricKey))
+        {
+            moveDirection = 0.0f;
+            trickState = TrickState.BackTrick;
+            animator.SetTrigger("BackTrick");
+            bDoingTrick = true;
+            Invoke("ResetTrickState", TrickDuration);
+        }
+        else if (Input.GetKeyDown(RTricKey))
+        {
+            moveDirection = 0.0f;
+            trickState = TrickState.RightTrick;
+            animator.SetTrigger("RightTrick");
+            bDoingTrick = true;
+            Invoke("ResetTrickState", TrickDuration);
+        }
+        else if (Input.GetKeyDown(LTricKey))
+        {
+            moveDirection = 0.0f;
+            trickState = TrickState.LeftTrick;
+            animator.SetTrigger("LeftTrick");
+            bDoingTrick = true;
+            Invoke("ResetTrickState", TrickDuration);
+        }
+        else
+        {
+            trickState = TrickState.Neutral;
+        }
+    }
+
+    void ResetTrickState()
+    {
+        trickState = TrickState.Neutral;
+        bDoingTrick = false;
     }
 
     void TriggerAnimations()
