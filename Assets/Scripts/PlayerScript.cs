@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
     Rigidbody2D rb;
     Vector2 newPos;
     Animator animator;
+    ParticleSystem SnowTrail;
 
     public KeyCode RightKey;
     public KeyCode LeftKey;
@@ -16,6 +17,7 @@ public class PlayerScript : MonoBehaviour
     public KeyCode BTrickKey;
     public KeyCode RTrickKey;
     public KeyCode LTrickKey;
+
 
     public float HorizontalSpeed = 15.0f;
     public float driftSpeed = 2.0f;
@@ -31,6 +33,7 @@ public class PlayerScript : MonoBehaviour
     private bool bDoingTrick;
     private bool moveDown;
     private bool GameStarted;
+    private bool SnowTrailActive;
 
     public enum TrickState {Neutral, ForwardTrick, BackTrick, RightTrick, LeftTrick};
 
@@ -41,6 +44,7 @@ public class PlayerScript : MonoBehaviour
         moveDown = false;
         bDoingTrick = false;
         GameStarted = false;
+        SnowTrailActive = false;
     }
 
     // Start is called before the first frame update
@@ -49,9 +53,10 @@ public class PlayerScript : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        SnowTrail = GetComponent<ParticleSystem>();
+        SnowTrail.Stop();
         InitialYPos = rb.position.y;
         DownScreenPosition = InitialYPos - DownScreenDistance;
-        
     }
 
     // Update is called once per frame
@@ -73,6 +78,7 @@ public class PlayerScript : MonoBehaviour
             InitialYPos = Mathf.Lerp(InitialYPos, DownScreenPosition, 0.01f);
             if(InitialYPos < DownScreenPosition)
             {
+                ToggleParticle();
                 moveDown = false;
             }
         }       
@@ -93,8 +99,10 @@ public class PlayerScript : MonoBehaviour
             if(GameStarted)
             {
                 //Move character at driftSpeed if there is no input
-
-                animator.SetTrigger("SkiDrift");
+                if(bIsTripped)
+                {
+                    animator.SetTrigger("SkiDrift");
+                }               
 
                 newPos = new Vector2(rb.position.x + (moveDirection * driftSpeed * Time.deltaTime), InitialYPos);
             }
@@ -258,6 +266,21 @@ public class PlayerScript : MonoBehaviour
     void GameStart()
     {
         GameStarted = true;
+        ToggleParticle();
         animator.SetBool("GameStart", true);
+    }
+
+    void ToggleParticle()
+    {
+        if(SnowTrailActive)
+        {
+            SnowTrail.Stop();
+            SnowTrailActive = false;
+        }
+        else
+        {
+            SnowTrail.Play();
+            SnowTrailActive = true;
+        }        
     }
 }
