@@ -99,7 +99,7 @@ public class PlayerScript : MonoBehaviour
             if(GameStarted)
             {
                 //Move character at driftSpeed if there is no input
-                if(bIsTripped)
+                if(!bIsTripped)
                 {
                     animator.SetTrigger("SkiDrift");
                 }               
@@ -213,6 +213,7 @@ public class PlayerScript : MonoBehaviour
         else if (Input.GetKeyDown(RTrickKey))
         {
             moveDirection = 0.0f;
+            sr.flipX = false;
             trickState = TrickState.RightTrick;
             animator.SetTrigger("RightTrick");
             bDoingTrick = true;
@@ -221,14 +222,11 @@ public class PlayerScript : MonoBehaviour
         else if (Input.GetKeyDown(LTrickKey))
         {
             moveDirection = 0.0f;
+            sr.flipX = true;
             trickState = TrickState.LeftTrick;
             animator.SetTrigger("LeftTrick");
             bDoingTrick = true;
             Invoke("ResetTrickState", TrickDuration);
-        }
-        else
-        {
-            trickState = TrickState.Neutral;
         }
     }
 
@@ -257,8 +255,11 @@ public class PlayerScript : MonoBehaviour
             }
             else
             {
-                sr.flipX = false;
-                animator.SetTrigger("SkiDown");
+                if(!bDoingTrick)
+                {
+                    sr.flipX = false;
+                    animator.SetTrigger("SkiDown");
+                }               
             }
         }        
     }

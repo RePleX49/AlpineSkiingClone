@@ -10,16 +10,19 @@ public class GateSpawnerScript : MonoBehaviour
     public GameObject RedVGate;
     public GameObject FinishLine;
     private GameObject previousGate;
+
     public float spawnInterval = 1.0f;
     public float minSpawnX = -2.0f;
     public float maxSpawnX = 2.0f;
     public int NumberOfGatesToSpawn = 55;
     public float VerticalGateOffset = 1;
     public float PreparationTime = 5.0f;
+
     private int GatesSpawned = 0;
     private bool FlipFlop = false;
     private float defaultOffset;
     private bool GameFinished = false;
+    private int PreviousTrickInt = 0;
 
     Vector2 spawnLocation;
     GameObject player;
@@ -51,6 +54,26 @@ public class GateSpawnerScript : MonoBehaviour
             if (FlipFlop)
             {
                 FlipFlop = false;
+
+                GameObject a = Instantiate(BlueHGate);
+
+                if (previousGate)
+                {
+                    if (previousGate.name == "RedVGate" || previousGate.name == "BlueVGate")
+                    {
+                        spawnLocation.y = spawnLocation.y - VerticalGateOffset;
+                    }
+                    else
+                    {
+                        spawnLocation.y = defaultOffset;
+                    }
+                }
+
+                previousGate = a;
+                a.transform.position = spawnLocation;
+                GatesSpawned++;
+
+                /*
                 if (Random.Range(0.0f, 2.0f) > 0.2f)
                 {
                     GameObject a = Instantiate(BlueHGate);
@@ -91,10 +114,31 @@ public class GateSpawnerScript : MonoBehaviour
                     a.transform.position = spawnLocation;
                     GatesSpawned++;
                 }
+                */
             }
             else
             {
                 FlipFlop = true;
+
+                GameObject a = Instantiate(RedHGate);
+
+                if (previousGate)
+                {
+                    if (previousGate.name == "RedVGate" || previousGate.name == "BlueVGate")
+                    {
+                        spawnLocation.y = spawnLocation.y - VerticalGateOffset;
+                    }
+                    else
+                    {
+                        spawnLocation.y = defaultOffset;
+                    }
+                }
+
+                previousGate = a;
+                a.transform.position = spawnLocation;
+                GatesSpawned++;
+
+                /*
                 if (Random.Range(0.0f, 2.0f) > 0.2f)
                 {
                     GameObject a = Instantiate(RedHGate);
@@ -135,6 +179,7 @@ public class GateSpawnerScript : MonoBehaviour
                     a.transform.position = spawnLocation;
                     GatesSpawned++;
                 }
+                */
             }            
             
             Debug.Log(GatesSpawned);
